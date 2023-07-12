@@ -18,9 +18,12 @@ on: workflow_dispatch
 #  pull_request_target:
 #    types:
 #      - closed
-
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+  
 jobs:
-
     build:
         # Running your workflow when a pull request merges
         # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-your-workflow-when-a-pull-request-merges-1
@@ -122,19 +125,6 @@ jobs:
                   # Sonar Project Key
                   sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
 
-            - name: Servicenow Security Scan Results
-              uses: maheshganji/custom-action-get@sonar
-              with:
-                devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-                devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-                instance-url: ${{ secrets.SN_INSTANCE_URL }}
-                tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-                context-github: ${{ toJSON(github) }}
-                job-name: 'Test'
-                security-tool-id: '3f3382b4479a615060f22fe4126d431d'
-                security-result-attributes: '{ "applicationName": "VeracodeAPP", "buildVersion": "V1" }'
-            
-            
             #- name: Run JUnit Tests
             #  run: mvn test -Dmaven.test.failure.ignore=true surefire-report:report
 
@@ -161,12 +151,33 @@ jobs:
                   # GitHub Custom Action
                   test-type: # optional, default is JUnit
 
+    run-veracode-scan:
+        name: Veracode Static Analysis Pipeline Scan
+        needs: test
+        uses: pramaraju96/DevOps-Test/.github/workflows/veracode.yml@main
+        secrets: inherit
+#         secrets:
+#             VERACODE_API_ID: ${{ secrets.VERACODE_API_ID }}
+#             VERACODE_API_KEY: ${{ secrets.VERACODE_API_KEY }}
+
     integrationTest:
         #if: github.event.pull_request.merged == true
         name: Integration Tests
-        needs: test
+        needs: run-veracode-scan
         runs-on: ubuntu-latest
         steps:
+        
+            - name: Servicenow Security Scan Results
+              uses: maheshganji/custom-action-get@sonar
+              with:
+                  devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+                  devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+                  instance-url: ${{ secrets.SN_INSTANCE_URL }}
+                  tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+                  context-github: ${{ toJSON(github) }}
+                  job-name: 'run-veracode-scan'
+                  security-result-attributes: '{ "scanner": "Veracode", "applicationName": "App-DevOps-Azure-POC"}'
+
             - name: ServiceNow DevOps Register Artifact
             # You may pin to the exact commit or the version.
             # uses: ServiceNow/servicenow-devops-register-artifact@6312802fd9eecd4a57b13216e968b8cae4ff6fe4
