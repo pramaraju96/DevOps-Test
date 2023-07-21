@@ -63,7 +63,7 @@ pipeline {
 			        "work_notes": "test work notes",
 			        "chg_model":"007c4001c343101035ae3f52c1d3aeb2"
 			    },
-			    "setCloseCode": true
+			    "setCloseCode": true,
 			"pollingInterval": 60
 			}
 		    """)
