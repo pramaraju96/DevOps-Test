@@ -52,20 +52,15 @@ pipeline {
 			{
 			    "attributes":
 			    {
-			        "short_description": "Test description",
-			        "priority": "1",
-			        "start_date": "2021-02-05 08:00:00",
-			        "end_date": "2022-04-05 08:00:00",
-			        "justification": "test justification",
-			        "description": "test description",
+			        "short_description": "DevOps change for digital banking application",
+			        "description": "Authentication for the banking login",
 			        "cab_required": true,
-			        "comments": "This update for work notes is from jenkins file",
-			        "work_notes": "test work notes",
-			        "chg_model":"007c4001c343101035ae3f52c1d3aeb2"
+			        "comments": "Login page authentication successful",
+			        "chg_model":"adffaa9e4370211072b7f6be5bb8f2ed"
 			    },
-			    "setCloseCode": true,
-			"pollingInterval": 60
-			}
+			    "setCloseCode": true
+			},
+			pollingInterval: 60
 		    """)
 
 		    
