@@ -56,7 +56,7 @@ pipeline {
 			        "description": "Authentication for the banking login",
 			        "assignment_group": "a715cd759f2002002920bde8132e7018",
 			        "comments": "Login page authentication successful",
-			        "chg_model":"adffaa9e4370211072b7f6be5bb8f2ed"
+			        //"chg_model":"adffaa9e4370211072b7f6be5bb8f2ed"
 			    },
 			    "setCloseCode": true
 			}
