@@ -1,12 +1,2 @@
-# DevOps-Test
-C1
-C2
-C3
-C4
-C5
-C6
-C7
-C8
-C9
-C10
-C11
+# Digital Banking Application Repository
+Digital banking involves the digitalization of all traditional banking products, processes, and activities to service customers using online channels. With digital banking, any bank branch services are available and accessible 24/7 on mobiles, computers, and compatible smart devices.
