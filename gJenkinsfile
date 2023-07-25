@@ -33,7 +33,7 @@ pipeline {
 	  
        }
        
-       stage('Pre-Prod') {
+       stage('SecurityScans') {
 		steps {
 		    sleep(3);
                     sonarSummaries()
