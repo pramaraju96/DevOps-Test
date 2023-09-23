@@ -45,7 +45,7 @@ stages:
 
         - task: ServiceNow-DevOps-Server-Change-Acceleration@1
           inputs:
-            connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection"
+            connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
             changeRequestDetails: |
               {
                 "attributes": {
