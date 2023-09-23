@@ -27,30 +27,30 @@ stages:
     jobs:
       - job: Job_Test
         steps:
-          - task: Bash@3
-            inputs:
-              targetType: inline
-              script: |
-                # Write your commands here                  
-                echo 'Hello world'
-          - task: Maven@3
-            inputs:
-              mavenPomFile: pom.xml
-              goals: test
-              publishJUnitResults: true
-              testResultsFiles: '**/surefire-reports/TEST-*.xml'
-              testRunTitle: Job_Test
-              javaHomeOption: JDKVersion
-              mavenVersionOption: Default
-              mavenAuthenticateFeed: false
-              effectivePomSkip: false
-              sonarQubeRunAnalysis: false
+          # - task: Bash@3
+          #   inputs:
+          #     targetType: inline
+          #     script: |
+          #       # Write your commands here                  
+          #       echo 'Hello world'
+          # - task: Maven@3
+          #   inputs:
+          #     mavenPomFile: pom.xml
+          #     goals: test
+          #     publishJUnitResults: true
+          #     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+          #     testRunTitle: Job_Test
+          #     javaHomeOption: JDKVersion
+          #     mavenVersionOption: Default
+          #     mavenAuthenticateFeed: false
+          #     effectivePomSkip: false
+          #     sonarQubeRunAnalysis: false
 
-          - task: ServiceNow-DevOps-Build-Sonar-Registration@1
-            inputs:
-              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
-              sonarProjectKey: 'pramaraju96_DevOps-Test'
-              sonarInstanceUrl: 'https://sonarcloud.io'
+          # - task: ServiceNow-DevOps-Build-Sonar-Registration@1
+          #   inputs:
+          #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+          #     sonarProjectKey: 'pramaraju96_DevOps-Test'
+          #     sonarInstanceUrl: 'https://sonarcloud.io'
 
           # - task: ServiceNow-DevOps-Build-Security-Results@1
           #   inputs:
@@ -60,131 +60,164 @@ stages:
           #        "scanner": "Veracode", 
           #        "applicationName": "VeraDemo10", 
           #        "securityToolId": "12deb11847d5b110bf04bf15126d4354"
+          # - task: ServiceNow-DevOps-Build-Security-Results@1
+          #   inputs:
+          #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+          #     securityResultAttributes: |
+          #       {
+          #        "scanner": "Checkmarx SAST", #Scanning tool and is required e.g. Checkmarx SAST.
+          #        "projectId": "3285", #Id of your Checkmarx SAST project and is required. This attribute is applicable only for Checkmarx SAST.
+          #        "securityToolId": "3d365580876df5106e97a8673cbb357a" #Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
+          #       }
           - task: ServiceNow-DevOps-Build-Security-Results@1
             inputs:
               connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
               securityResultAttributes: |
                 {
-                 "scanner": "Checkmarx SAST", #Scanning tool and is required e.g. Checkmarx SAST.
-                 "projectId": "3285", #Id of your Checkmarx SAST project and is required. This attribute is applicable only for Checkmarx SAST.
-                 "securityToolId": "3d365580876df5106e97a8673cbb357a" #Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
+                 "scanner": "Checkmarx SAST",
+                 "projectId": "3285",
+                 "securityToolId": "3d365580876df5106e97a8673cbb357a"
                 }
 
+  # - stage: Deploy
+  #   dependsOn: Test
+  #   jobs:
+  #     - job: Job_Deploy
+  #       steps:
+  #         - task: Bash@3
+  #           inputs:
+  #             targetType: inline
+  #             script: |
+  #               # Write your commands here                  
+  #               echo 'Hello world'
 
-  - stage: Deploy
-    dependsOn: Test
-    jobs:
-      - job: Job_Deploy
-        steps:
-          - task: Bash@3
-            inputs:
-              targetType: inline
-              script: |
-                # Write your commands here                  
-                echo 'Hello world'
-
-          - task: ServiceNow-DevOps-Agent-Artifact-Registration@1
-            inputs:
-              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
-              artifactsPayload: |
-                {
-                    "artifacts":
-                    [
-                    {
-                        "name": "alpha",
-                        "repositoryName": "$(build.definitionName)",
-                        "version": "1.$(build.buildId)",
-                        "pipelineName":"$(system.teamProject)/$(build.definitionName)",
-                        "taskExecutionNumber":"$(build.buildId)",
-                        "stageName":"$(system.jobDisplayName)",
-                        "branchName":"$(build.sourceBranchName)"
-                    },
-                    {
-                        "name": "beta",
-                        "repositoryName": "$(build.definitionName)",
-                        "version": "1.$(build.buildId)",
-                        "pipelineName":"$(system.teamProject)/$(build.definitionName)",
-                        "taskExecutionNumber":"$(build.buildId)",
-                        "stageName":"$(system.jobDisplayName)",
-                        "branchName":"$(build.sourceBranchName)"
-                    },
-                    {
-                        "name": "gamma",
-                        "repositoryName": "$(build.definitionName)",
-                        "version": "1.$(build.buildId)",
-                        "pipelineName":"$(system.teamProject)/$(build.definitionName)",
-                        "taskExecutionNumber":"$(build.buildId)",
-                        "stageName":"$(system.jobDisplayName)",
-                        "branchName":"$(build.sourceBranchName)"
-                    }]
-                }
-          - task: ServiceNow-DevOps-Agent-Package-Registration@1
-            inputs:
-              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
-              packageName: 'package-devops-3.0.0-SNAPSHOT.zip'
-              artifactsPayload: |
-                {
-                    "artifacts": [
-                    {
-                        "name": "alpha",
-                        "repositoryName": "$(build.definitionName)",
-                        "version": "1.$(build.buildId)",
-                        "pipelineName":"$(system.teamProject)/$(build.definitionName)",
-                        "taskExecutionNumber":"$(build.buildId)",
-                        "stageName":"$(system.jobDisplayName)",
-                        "branchName":"$(build.sourceBranchName)"
-                    },
-                    {
-                        "name": "beta",
-                        "repositoryName": "$(build.definitionName)",
-                        "version": "1.$(build.buildId)",
-                        "pipelineName":"$(system.teamProject)/$(build.definitionName)",
-                        "taskExecutionNumber":"$(build.buildId)",
-                        "stageName":"$(system.jobDisplayName)",
-                        "branchName":"$(build.sourceBranchName)"
-                    },
-                    {
-                        "name": "gamma",
-                        "repositoryName": "$(build.definitionName)",
-                        "version": "1.$(build.buildId)",
-                        "pipelineName":"$(system.teamProject)/$(build.definitionName)",
-                        "taskExecutionNumber":"$(build.buildId)",
-                        "stageName":"$(system.jobDisplayName)",
-                        "branchName":"$(build.sourceBranchName)"
-                    }],
-                    "pipelineName":"$(system.teamProject)/$(build.definitionName)",
-                    "taskExecutionNumber":"$(build.buildId)",
-                    "stageName":"$(system.jobDisplayName)",
-                    "branchName":"$(build.sourceBranchName)"
-                }
+  #         - task: ServiceNow-DevOps-Agent-Artifact-Registration@1
+  #           inputs:
+  #             connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+  #             artifactsPayload: |
+  #               {
+  #                   "artifacts":
+  #                   [
+  #                   {
+  #                       "name": "alpha",
+  #                       "repositoryName": "$(build.definitionName)",
+  #                       "version": "1.$(build.buildId)",
+  #                       "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+  #                       "taskExecutionNumber":"$(build.buildId)",
+  #                       "stageName":"$(system.jobDisplayName)",
+  #                       "branchName":"$(build.sourceBranchName)"
+  #                   },
+  #                   {
+  #                       "name": "beta",
+  #                       "repositoryName": "$(build.definitionName)",
+  #                       "version": "1.$(build.buildId)",
+  #                       "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+  #                       "taskExecutionNumber":"$(build.buildId)",
+  #                       "stageName":"$(system.jobDisplayName)",
+  #                       "branchName":"$(build.sourceBranchName)"
+  #                   },
+  #                   {
+  #                       "name": "gamma",
+  #                       "repositoryName": "$(build.definitionName)",
+  #                       "version": "1.$(build.buildId)",
+  #                       "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+  #                       "taskExecutionNumber":"$(build.buildId)",
+  #                       "stageName":"$(system.jobDisplayName)",
+  #                       "branchName":"$(build.sourceBranchName)"
+  #                   }]
+  #               }
+  #         - task: ServiceNow-DevOps-Agent-Package-Registration@1
+  #           inputs:
+  #             connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+  #             packageName: 'package-devops-3.0.0-SNAPSHOT.zip'
+  #             artifactsPayload: |
+  #               {
+  #                   "artifacts": [
+  #                   {
+  #                       "name": "alpha",
+  #                       "repositoryName": "$(build.definitionName)",
+  #                       "version": "1.$(build.buildId)",
+  #                       "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+  #                       "taskExecutionNumber":"$(build.buildId)",
+  #                       "stageName":"$(system.jobDisplayName)",
+  #                       "branchName":"$(build.sourceBranchName)"
+  #                   },
+  #                   {
+  #                       "name": "beta",
+  #                       "repositoryName": "$(build.definitionName)",
+  #                       "version": "1.$(build.buildId)",
+  #                       "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+  #                       "taskExecutionNumber":"$(build.buildId)",
+  #                       "stageName":"$(system.jobDisplayName)",
+  #                       "branchName":"$(build.sourceBranchName)"
+  #                   },
+  #                   {
+  #                       "name": "gamma",
+  #                       "repositoryName": "$(build.definitionName)",
+  #                       "version": "1.$(build.buildId)",
+  #                       "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+  #                       "taskExecutionNumber":"$(build.buildId)",
+  #                       "stageName":"$(system.jobDisplayName)",
+  #                       "branchName":"$(build.sourceBranchName)"
+  #                   }],
+  #                   "pipelineName":"$(system.teamProject)/$(build.definitionName)",
+  #                   "taskExecutionNumber":"$(build.buildId)",
+  #                   "stageName":"$(system.jobDisplayName)",
+  #                   "branchName":"$(build.sourceBranchName)"
+  #               }
 
           
   - stage: Prod
-    dependsOn: Deploy
+    dependsOn: Test
     jobs:
       - job: Job_Prod
         pool:
           name: server
         steps:
-          - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-            inputs:
-              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
-              UpstreamJob: 'Job_Deploy'
-              changeRequestDetails: |
-                {
-                  "setCloseCode": true,
-                  "attributes": {
-                    "requested_by": {
-                        "name": "DevOps System"
-                    },
-                    "category": "DevOps",
-                    "priority": "2",
-                    "start_date": "2022-01-05 11:59:59",
-                    "end_date": "2022-01-08 11:59:59",
-                    "chg_model": {"name": "devops"},
-                    "assignment_group": "a715cd759f2002002920bde8132e7018"
-                    }
-                }
+        
+          # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+          #   inputs:
+          #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+          #     UpstreamJob: 'Job_Deploy'
+          #     changeRequestDetails: |
+          #       {
+          #         "setCloseCode": true,
+          #         "attributes": {
+          #           "requested_by": {
+          #               "name": "DevOps System"
+          #           },
+          #           "category": "DevOps",
+          #           "priority": "2",
+          #           "start_date": "2022-01-05 11:59:59",
+          #           "end_date": "2022-01-08 11:59:59",
+          #           "chg_model": {"name": "devops"},
+          #           "assignment_group": "a715cd759f2002002920bde8132e7018"
+          #           }
+          #       }
+
+        - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+          inputs:
+            connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
+
+          # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+          #   inputs:
+          #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+          #     UpstreamJob: 'Job_Deploy'
+          #     changeRequestDetails: |
+          #       {
+          #         "setCloseCode": true,
+          #         "attributes": {
+          #           "requested_by": {
+          #               "name": "DevOps System"
+          #           },
+          #           "category": "DevOps",
+          #           "priority": "2",
+          #           "start_date": "2022-01-05 11:59:59",
+          #           "end_date": "2022-01-08 11:59:59",
+          #           "chg_model": {"name": "devops"},
+          #           "assignment_group": "a715cd759f2002002920bde8132e7018"
+          #           }
+          #       }          
 
           # - task: InvokeRESTAPI@1
           #   inputs:
