@@ -65,11 +65,11 @@ stages:
               connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
               securityResultAttributes: |
                 {
-                "scanner": "Checkmarx SAST", #Scanning tool and is required e.g. Checkmarx SAST.
+                "scanner": "Checkmarx SAST",
                 "projectId": "3285", #Id of your Checkmarx SAST project and is required. This attribute is applicable only for Checkmarx SAST.
                 "securityToolId": "3d365580876df5106e97a8673cbb357a" #Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
                 }
-                }
+
 
   - stage: Deploy
     dependsOn: Test
