@@ -48,5 +48,11 @@ stages:
             connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
             changeRequestDetails: |
               {
-                "autoCloseChange": false
+                "autoCloseChange": false,
+                "attributes": {
+                  "requested_by": {
+                    "name": "DevOps System"
+                  } # requested_by with name.
+                  # You can specify the requested_by attribute with sys_id as well. Example: "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
+                }                
               }
