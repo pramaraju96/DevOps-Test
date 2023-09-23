@@ -16,15 +16,16 @@ stages:
         pool:
           name: server
         steps:
-        # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-        #   inputs:
-        #     connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
+        - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+          inputs:
+            connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
 
         - task: ServiceNow-DevOps-Server-Change-Acceleration@1
           inputs:
             connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
             changeRequestDetails: |
               {
+                "autoCloseChange": false
                 "attributes": {
                   "requested_by": {
                     "name": "DevOps System"
@@ -41,6 +42,7 @@ stages:
                   "end_date": "2023-09-09 11:59:59" # This is the planned end date.
                 }
               }
+
         # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
         #   inputs:
         #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
