@@ -48,18 +48,27 @@ stages:
 
           - task: ServiceNow-DevOps-Build-Sonar-Registration@1
             inputs:
-              connectedServiceName: 'devopstokyo139-Basic Project1-ServiceNow DevOps Service Connection'
+              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
               sonarProjectKey: 'pramaraju96_DevOps-Test'
               sonarInstanceUrl: 'https://sonarcloud.io'
 
+          # - task: ServiceNow-DevOps-Build-Security-Results@1
+          #   inputs:
+          #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+          #     securityResultAttributes: |
+          #       {
+          #        "scanner": "Veracode", 
+          #        "applicationName": "VeraDemo10", 
+          #        "securityToolId": "12deb11847d5b110bf04bf15126d4354"
           - task: ServiceNow-DevOps-Build-Security-Results@1
             inputs:
-              connectedServiceName: 'devopstokyo139-Basic Project1-ServiceNow DevOps Service Connection'
+              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
               securityResultAttributes: |
                 {
-                 "scanner": "Veracode", 
-                 "applicationName": "VeraDemo10", 
-                 "securityToolId": "12deb11847d5b110bf04bf15126d4354" 
+                "scanner": "Checkmarx SAST", #Scanning tool and is required e.g. Checkmarx SAST.
+                "projectId": "3285", #Id of your Checkmarx SAST project and is required. This attribute is applicable only for Checkmarx SAST.
+                "securityToolId": "3d365580876df5106e97a8673cbb357a" #Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
+                }
                 }
 
   - stage: Deploy
@@ -76,7 +85,7 @@ stages:
 
           - task: ServiceNow-DevOps-Agent-Artifact-Registration@1
             inputs:
-              connectedServiceName: 'devopstokyo139-Basic Project1-ServiceNow DevOps Service Connection'
+              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
               artifactsPayload: |
                 {
                     "artifacts":
@@ -111,7 +120,7 @@ stages:
                 }
           - task: ServiceNow-DevOps-Agent-Package-Registration@1
             inputs:
-              connectedServiceName: 'devopstokyo139-Basic Project1-ServiceNow DevOps Service Connection'
+              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
               packageName: 'package-devops-3.0.0-SNAPSHOT.zip'
               artifactsPayload: |
                 {
@@ -159,7 +168,7 @@ stages:
         steps:
           - task: ServiceNow-DevOps-Server-Change-Acceleration@1
             inputs:
-              connectedServiceName: 'devopstokyo139-Basic Project1-ServiceNow DevOps Service Connection'
+              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
               UpstreamJob: 'Job_Deploy'
               changeRequestDetails: |
                 {
