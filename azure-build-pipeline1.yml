@@ -20,28 +20,45 @@ stages:
         #   inputs:
         #     connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
 
-        - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-          inputs:
-            connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
-            changeRequestDetails: |
-              {
-                "autoCloseChange": false
-                "attributes": {
-                  "requested_by": {
-                    "name": "DevOps System"
-                  }, # requested_by with name.
-                  # You can specify the requested_by attribute with sys_id as well. Example: "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
-                  "assignment_group": {
-                    "name": "Change Management"
-                  }, # assignment_group with name.
-                  # You can specify the assignment_group attribute with sys_id as well. Example: "assignment_group": "5f721d93c0a8010e015533746de18bf9"
-                  "priority": "2",
-                  "comments": "This is a sample pipeline script to be added in your change step",
-                  "work_notes": "Update this to work_notes",
-                  "start_date": "2023-09-07 11:59:59",# This is the planned start date. 
-                  "end_date": "2023-09-09 11:59:59" # This is the planned end date.
-                }
-              }
+        # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+        #   inputs:
+        #     connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
+        #     changeRequestDetails: |
+        #       {
+        #         "autoCloseChange": false
+        #         "attributes": {
+        #           "requested_by": {
+        #             "name": "DevOps System"
+        #           }, # requested_by with name.
+        #           # You can specify the requested_by attribute with sys_id as well. Example: "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
+        #           "assignment_group": {
+        #             "name": "Change Management"
+        #           }, # assignment_group with name.
+        #           # You can specify the assignment_group attribute with sys_id as well. Example: "assignment_group": "5f721d93c0a8010e015533746de18bf9"
+        #           "priority": "2",
+        #           "comments": "This is a sample pipeline script to be added in your change step",
+        #           "work_notes": "Update this to work_notes",
+        #           "start_date": "2023-09-07 11:59:59",# This is the planned start date. 
+        #           "end_date": "2023-09-09 11:59:59" # This is the planned end date.
+        #         }
+        #       }
+          - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+            inputs:
+              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+              changeRequestDetails: |
+                {
+                  "attributes": {
+                    "requested_by": {
+                        "name": "DevOps System"
+                    },
+                    "category": "DevOps",
+                    "priority": "2",
+                    "start_date": "2022-01-05 11:59:59",
+                    "end_date": "2022-01-08 11:59:59",
+                    "chg_model": {"name": "devops"},
+                    "assignment_group": "a715cd759f2002002920bde8132e7018"
+                    }
+                } 
 
         # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
         #   inputs:
