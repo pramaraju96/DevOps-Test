@@ -16,9 +16,9 @@ stages:
         pool:
           name: server
         steps:
-        - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-          inputs:
-            connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
+        # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+        #   inputs:
+        #     connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
 
         - task: ServiceNow-DevOps-Server-Change-Acceleration@1
           inputs:
