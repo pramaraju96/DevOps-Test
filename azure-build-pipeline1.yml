@@ -10,23 +10,23 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: Build
-    jobs:
-      - job: Job_Build
-        steps:
-          - task: Bash@3
-            inputs:
-              targetType: inline
-              script: |
-                # Write your commands here                  
-                echo 'Hello world.'
+  # - stage: Build
+  #   jobs:
+  #     - job: Job_Build
+  #       steps:
+  #         - task: Bash@3
+  #           inputs:
+  #             targetType: inline
+  #             script: |
+  #               # Write your commands here                  
+  #               echo 'Hello world.'
   
-  - stage: Test
-    dependsOn:
-      - Build
-    jobs:
-      - job: Job_Test
-        steps:
+  # - stage: Test
+  #   dependsOn:
+  #     - Build
+  #   jobs:
+  #     - job: Job_Test
+  #       steps:
           # - task: Bash@3
           #   inputs:
           #     targetType: inline
@@ -69,15 +69,15 @@ stages:
           #        "projectId": "3285", #Id of your Checkmarx SAST project and is required. This attribute is applicable only for Checkmarx SAST.
           #        "securityToolId": "3d365580876df5106e97a8673cbb357a" #Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
           #       }
-          - task: ServiceNow-DevOps-Build-Security-Results@1
-            inputs:
-              connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
-              securityResultAttributes: |
-                {
-                 "scanner": "Checkmarx SAST",
-                 "projectId": "3285",
-                 "securityToolId": "3d365580876df5106e97a8673cbb357a"
-                }
+          # - task: ServiceNow-DevOps-Build-Security-Results@1
+          #   inputs:
+          #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
+          #     securityResultAttributes: |
+          #       {
+          #        "scanner": "Checkmarx SAST",
+          #        "projectId": "3285",
+          #        "securityToolId": "3d365580876df5106e97a8673cbb357a"
+          #       }
 
   # - stage: Deploy
   #   dependsOn: Test
