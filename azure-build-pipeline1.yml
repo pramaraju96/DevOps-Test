@@ -23,9 +23,9 @@ stages:
         - task: ServiceNow-DevOps-Server-Change-Acceleration@1
           inputs:
             connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
-            # You can specify the requested_by attribute with sys_id as well. Example: "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
             changeRequestDetails: |
               {
+                # You can specify the requested_by attribute with sys_id as well. Example: "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
                 "attributes": {
                   "requested_by": {
                     "name": "DevOps System"
