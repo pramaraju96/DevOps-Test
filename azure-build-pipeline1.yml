@@ -56,7 +56,9 @@ stages:
                     "start_date": "2022-01-05 11:59:59",
                     "end_date": "2022-01-08 11:59:59",
                     "chg_model": {"name": "devops"},
-                    "assignment_group": "a715cd759f2002002920bde8132e7018"
+                    "assignment_group": {
+                      "name": "Change Management"
+                    }
                     }
                 } 
 
