@@ -53,6 +53,5 @@ stages:
                   "requested_by": {
                     "name": "DevOps System"
                   }
-                  # You can specify the requested_by attribute with sys_id as well. Example: "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
                 }                
               }
