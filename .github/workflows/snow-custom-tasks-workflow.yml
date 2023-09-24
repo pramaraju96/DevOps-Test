@@ -59,7 +59,7 @@ jobs:
                # Display Name of the Job
                job-name: 'ServiceNow Veracode Security Scan Results'
                ##security-result-attributes: "{'scanner': 'Veracode', 'applicationName': 'VeraDemo10', 'buildVersion': '', 'securityToolId': ''}"
-               security-result-attributes: '{"scanner": "Veracode", "applicationName": "VeraDemo10", "buildVersion": "", "securityToolId": ""}'
+               security-result-attributes: '{"scanner": "Veracode", "applicationName": "VeraDemo10"}'
                # applicationName: Name of your Veracode application and is required. This attribute is applicable only for Veracode.
                # scanner: Scanning tool and is required e.g. Veracode.
                # buildVersion: Veracode Scan name / build version and is optional. This attribute is applicable only for Veracode.
@@ -88,7 +88,7 @@ jobs:
                # Display Name of the Job
                job-name: 'ServiceNow Checkmarx One Security Scan Results'
                ##security-result-attributes: "{'scanner': 'Checkmarx One', 'projectName': '', 'projectId': '0099bb02-07af-48be-928f-5c0ff44aec0', 'scanId': '', 'securityToolId': ''}"
-               security-result-attributes: '{"scanner": "Checkmarx One", "projectName": "", "projectId": "0099bb02-07af-48be-928f-5c0ff44aec0", "scanId": "", "securityToolId": ""}'
+               security-result-attributes: '{"scanner": "Checkmarx One", "projectId": "0099bb02-07af-48be-928f-5c0ff44aec0"}'
                # scanner: Scanning tool and is required e.g. Checkmarx One.
                # projectName/projectId: Name/Id of your Checkmarx One project and is required. This attribute is applicable only for Checkmarx One.
                # scanId: Checkmarx One scan id and is optional. This attribute is applicable only for Checkmarx One.
@@ -117,7 +117,7 @@ jobs:
                # Display Name of the Job
                job-name: 'ServiceNow Checkmarx SAST Security Scan Results'
                ##security-result-attributes: "{'scanner': 'Checkmarx SAST', 'projectId': '3285', 'securityToolId': ''}"
-               security-result-attributes: '{"scanner": "Checkmarx SAST", "projectId": "3285", "securityToolId": ""}'
+               security-result-attributes: '{"scanner": "Checkmarx SAST", "projectId": "3285"}'
                # scanner: Scanning tool and is required e.g. Checkmarx SAST.
                # projectId: Id of your Checkmarx SAST project and is required. This attribute is applicable only for Checkmarx SAST.
                # securityToolId: Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
