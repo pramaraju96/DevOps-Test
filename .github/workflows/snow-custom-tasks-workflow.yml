@@ -67,7 +67,7 @@ jobs:
 
     ServiceNowCheckmarxOneSecurityScanResults:
         # jobs that must complete successfully before this job will run
-        needs: build
+        needs: ServiceNowVeracodeSecurityScanResults
         # type of machine to run the job on
         runs-on: ubuntu-latest
         name: ServiceNow Checkmarx One Security Scan Results
@@ -96,7 +96,7 @@ jobs:
 
     ServiceNowCheckmarxSASTSecurityScanResults:
         # jobs that must complete successfully before this job will run
-        needs: build
+        needs: ServiceNowCheckmarxOneSecurityScanResults
         # type of machine to run the job on
         runs-on: ubuntu-latest
         name: ServiceNow Checkmarx SAST Security Scan Results
