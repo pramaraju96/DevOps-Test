@@ -88,7 +88,7 @@ jobs:
                # Display Name of the Job
                job-name: 'ServiceNow Checkmarx One Security Scan Results'
                ##security-result-attributes: "{'scanner': 'Checkmarx One', 'projectName': '', 'projectId': '0099bb02-07af-48be-928f-5c0ff44aec05', 'scanId': '', 'securityToolId': ''}"
-               security-result-attributes: '{"scanner": "Checkmarx One", "projectId": "0099bb02-07af-48be-928f-5c0ff44aec0"}'
+               security-result-attributes: '{"scanner": "Checkmarx One", "projectId": "0099bb02-07af-48be-928f-5c0ff44aec05"}'
                # scanner: Scanning tool and is required e.g. Checkmarx One.
                # projectName/projectId: Name/Id of your Checkmarx One project and is required. This attribute is applicable only for Checkmarx One.
                # scanId: Checkmarx One scan id and is optional. This attribute is applicable only for Checkmarx One.
