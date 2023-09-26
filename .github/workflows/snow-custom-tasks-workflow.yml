@@ -65,38 +65,10 @@ jobs:
                # buildVersion: Veracode Scan name / build version and is optional. This attribute is applicable only for Veracode.
                # securityToolId: Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
 
-    ServiceNowCheckmarxOneSecurityScanResults:
-        # jobs that must complete successfully before this job will run
-        needs: ServiceNowVeracodeSecurityScanResults
-        # type of machine to run the job on
-        runs-on: ubuntu-latest
-        name: ServiceNow Checkmarx One Security Scan Results
-        steps:
-          - name: ServiceNow DevOps Security Results
-            uses: ServiceNow/servicenow-devops-security-result@dev
-            with:
-               # Devops Integration User Name
-               devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-               # Devops Integration User Password
-               devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-               # ServiceNow Instance URL
-               instance-url: ${{ secrets.SN_INSTANCE_URL }}
-               # Orchestration Tool Id
-               tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-               # GitHub Context
-               context-github: ${{ toJSON(github) }}
-               # Display Name of the Job
-               job-name: 'ServiceNow Checkmarx One Security Scan Results'
-               ##security-result-attributes: "{'scanner': 'Checkmarx One', 'projectName': '', 'projectId': '0099bb02-07af-48be-928f-5c0ff44aec05', 'scanId': '', 'securityToolId': ''}"
-               security-result-attributes: '{"scanner": "Checkmarx One", "projectId": "0099bb02-07af-48be-928f-5c0ff44aec05"}'
-               # scanner: Scanning tool and is required e.g. Checkmarx One.
-               # projectName/projectId: Name/Id of your Checkmarx One project and is required. This attribute is applicable only for Checkmarx One.
-               # scanId: Checkmarx One scan id and is optional. This attribute is applicable only for Checkmarx One.
-               # securityToolId: Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
 
     ServiceNowCheckmarxSASTSecurityScanResults:
         # jobs that must complete successfully before this job will run
-        needs: ServiceNowCheckmarxOneSecurityScanResults
+        needs: build
         # type of machine to run the job on
         runs-on: ubuntu-latest
         name: ServiceNow Checkmarx SAST Security Scan Results
@@ -124,7 +96,7 @@ jobs:
 
     ServiceNowDevOpsChange:
         # jobs that must complete successfully before this job will run
-        needs: [ServiceNowVeracodeSecurityScanResults, ServiceNowCheckmarxOneSecurityScanResults, ServiceNowCheckmarxSASTSecurityScanResults]
+        needs: [ServiceNowVeracodeSecurityScanResults, ServiceNowCheckmarxSASTSecurityScanResults]
         # type of machine to run the job on
         runs-on: ubuntu-latest
         name: 'ServiceNow DevOps Change'
