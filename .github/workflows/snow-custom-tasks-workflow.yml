@@ -36,34 +36,34 @@ jobs:
            with:
               java-version: 11
 
-    ServiceNowVeracodeSecurityScanResults:
-        # jobs that must complete successfully before this job will run
-        needs: build
-        # type of machine to run the job on
-        runs-on: ubuntu-latest
-        name: ServiceNow Veracode Security Scan Results
-        steps:
-          - name: ServiceNow DevOps Security Results
-            uses: ServiceNow/servicenow-devops-security-result@dev
-            with:
-               # Devops Integration User Name
-               devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-               # Devops Integration User Password
-               devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-               # ServiceNow Instance URL
-               instance-url: ${{ secrets.SN_INSTANCE_URL }}
-               # Orchestration Tool Id
-               tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-               # GitHub Context
-               context-github: ${{ toJSON(github) }}
-               # Display Name of the Job
-               job-name: 'ServiceNow Veracode Security Scan Results'
-               ##security-result-attributes: "{'scanner': 'Veracode', 'applicationName': 'VeraDemo10', 'buildVersion': '', 'securityToolId': ''}"
-               security-result-attributes: '{"scanner": "Veracode", "applicationName": "VeraDemo10"}'
-               # applicationName: Name of your Veracode application and is required. This attribute is applicable only for Veracode.
-               # scanner: Scanning tool and is required e.g. Veracode.
-               # buildVersion: Veracode Scan name / build version and is optional. This attribute is applicable only for Veracode.
-               # securityToolId: Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
+    # ServiceNowVeracodeSecurityScanResults:
+    #     # jobs that must complete successfully before this job will run
+    #     needs: build
+    #     # type of machine to run the job on
+    #     runs-on: ubuntu-latest
+    #     name: ServiceNow Veracode Security Scan Results
+    #     steps:
+    #       - name: ServiceNow DevOps Security Results
+    #         uses: ServiceNow/servicenow-devops-security-result@dev
+    #         with:
+    #            # Devops Integration User Name
+    #            devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+    #            # Devops Integration User Password
+    #            devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+    #            # ServiceNow Instance URL
+    #            instance-url: ${{ secrets.SN_INSTANCE_URL }}
+    #            # Orchestration Tool Id
+    #            tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+    #            # GitHub Context
+    #            context-github: ${{ toJSON(github) }}
+    #            # Display Name of the Job
+    #            job-name: 'ServiceNow Veracode Security Scan Results'
+    #            ##security-result-attributes: "{'scanner': 'Veracode', 'applicationName': 'VeraDemo10', 'buildVersion': '', 'securityToolId': ''}"
+    #            security-result-attributes: '{"scanner": "Veracode", "applicationName": "VeraDemo10"}'
+    #            # applicationName: Name of your Veracode application and is required. This attribute is applicable only for Veracode.
+    #            # scanner: Scanning tool and is required e.g. Veracode.
+    #            # buildVersion: Veracode Scan name / build version and is optional. This attribute is applicable only for Veracode.
+    #            # securityToolId: Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
 
 
     ServiceNowCheckmarxSASTSecurityScanResults:
@@ -96,7 +96,7 @@ jobs:
 
     ServiceNowDevOpsChange:
         # jobs that must complete successfully before this job will run
-        needs: [ServiceNowVeracodeSecurityScanResults, ServiceNowCheckmarxSASTSecurityScanResults]
+        needs: [ServiceNowCheckmarxSASTSecurityScanResults]
         # type of machine to run the job on
         runs-on: ubuntu-latest
         name: 'ServiceNow DevOps Change'
