@@ -36,13 +36,14 @@ jobs:
     # type of machine to run the job on
     runs-on: ubuntu-latest
     outputs:
-      changeRequestNumber: ${{ steps.ServiceNowDevOpsGetAndUpdateChange.outputs.change-request-number }}
+      changeRequestNumber: ${{ steps.get_change.outputs.change-request-number }}
     name: 'ServiceNow DevOps Get Change'
     steps:
-      - name: ServiceNow DevOps Get Change
+      - name: ServiceNow DevOps Get and Update Change
         # You may pin to the exact commit or the version.
         # uses: ServiceNow/servicenow-devops-get-change@0f8b1914adeaec764a4286bdd9cba73ed1c6097f
         uses: ServiceNow/servicenow-devops-get-change@v2.0.0
+        id: get_change
         with:
           # ServiceNow Instance URL
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
@@ -56,7 +57,7 @@ jobs:
           change-details: '{"build_number": "", "pipeline_name": "", "stage_name": "ServiceNow DevOps Change"}'
 
       - name: Output of Get change
-        run: echo "change-request-number = ${{ steps.ServiceNowDevOpsGetAndUpdateChange.outputs.change-request-number }}" >> $GITHUB_OUTPUT
+        run: echo "change-request-number = ${{ steps.get_change.outputs.change-request-number }}" >> $GITHUB_OUTPUT
       
       - name: ServiceNow DevOps Update Change
         # You may pin to the exact commit or the version.
@@ -72,7 +73,7 @@ jobs:
           # Github Context
           context-github: ${{ toJSON(github) }}
           # Change Request Number to be Updated
-          change-request-number: ${{ steps.ServiceNowDevOpsGetAndUpdateChange.outputs.change-request-number }}
+          change-request-number: ${{ steps.get_change.outputs.change-request-number }}
           # The customized inputs to create change with the requested details.
           change-request-details: '{ "state":"3","close_code":"successful_issues","close_notes": "Test results unsuccessful" }'
       
