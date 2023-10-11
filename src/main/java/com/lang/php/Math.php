@@ -45,7 +45,18 @@ function add($v1 , $v2)
     {
         return ($v1 + $v2);
     }
-
+function add($v1 , $v2)
+    {
+        return ($v1 + $v2);
+    }
+function add($v1 , $v2)
+    {
+        return ($v1 + $v2);
+    }
+function add($v1 , $v2)
+    {
+        return ($v1 + $v2);
+    }
 /**
  * Simple math class.
  *
