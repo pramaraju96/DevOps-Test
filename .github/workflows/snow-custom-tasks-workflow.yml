@@ -88,7 +88,7 @@ jobs:
                context-github: ${{ toJSON(github) }}
                # Display Name of the Job
                job-name: 'ServiceNow Checkmarx SAST Security Scan Results'
-               ##security-result-attributes: "{'scanner': 'Checkmarx SAST', 'projectId': '3285', 'securityToolId': ''}"
+               ##security-result-attributes: "{'scanner': 'Checkmarx SAST', 'projectId': '3285', 'securityToolId': '994b4864c3293510a653f92f05013100'}"
                security-result-attributes: '{"scanner": "Checkmarx SAST", "projectId": "3285"}'
                # scanner: Scanning tool and is required e.g. Checkmarx SAST.
                # projectId: Id of your Checkmarx SAST project and is required. This attribute is applicable only for Checkmarx SAST.
