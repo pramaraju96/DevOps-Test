@@ -2,58 +2,71 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
 trigger:
-- main
-
+  - none
 pool:
   vmImage: ubuntu-latest
 
-stages:       
-  - stage: Prod
-    jobs:
-      - job: Job_Prod
-        pool:
-          name: server
-        steps:
-        # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-        #   inputs:
-        #     connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
+# variables:
+# - group: Variable Group
 
+stages:
+  - stage: Build
+    jobs:
+      - job: 'Job_Build'
+        steps:
+        - script: echo Hello, world!
+          displayName: 'Run a one-line script'
+
+  - stage: Test
+    dependsOn: Build
+    jobs:
+      - job: 'Job_Test'
+        steps:
+        - script: echo Hello, world!
+          displayName: 'Run a one-line script'
+        - task: SonarQubePrepare@5
+          inputs:
+            SonarQube: 'SonarQube2'
+            scannerMode: 'Other'
+            extraProperties: |
+              # Additional properties that will be passed to the scanner,
+              # Put one key=value per line, example:
+              # sonar.exclusions=**/*.bin
+              sonar.projectKey=Basic_Project1_DevOps-Test_AYsd6a1P_xDA_af4Ff8Y
+              sonar.projectName=Basic_Project1_DevOps-Test            
+        
+        - task: Maven@3
+          inputs:
+            mavenPomFile: 'pom.xml'
+            publishJUnitResults: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            testRunTitle: 'Test results'
+            javaHomeOption: 'JDKVersion'
+            mavenVersionOption: 'Default'
+            mavenAuthenticateFeed: false
+            effectivePomSkip: false
+            sonarQubeRunAnalysis: true
+            sqMavenPluginVersionChoice: 'latest'
+
+  - stage: Change
+    dependsOn: Test
+    jobs:
+      - job: 'Job_Change'
+        pool: server
+        steps:
         - task: ServiceNow-DevOps-Server-Change-Acceleration@1
           inputs:
-            connectedServiceName: "dsinghu1-Basic Project1-ServiceNow DevOps Service Connection" # ServiceNow DevOps Change Velocity Service Connection
+            connectedServiceName: 'dsinghu6-Basic Project1-ServiceNow DevOps Service Connection'
+            UpstreamJob: 'Job_Test'
             changeRequestDetails: |
               {
-                "attributes": {
-                  "requested_by": {
-                    "name": "DevOps System"
-                  },
-                  "assignment_group": {
-                    "name": "Change Management"
-                  },
-                  "priority": "2",
-                  "comments": "This is a sample pipeline script to be added in your change step",
-                  "work_notes": "Update this to work_notes",
-                  "start_date": "2023-09-07 11:59:59",
-                  "end_date": "2023-09-09 11:59:59"
-                }
+                                  "autoCloseChange": true,
+                                  "setCloseCode": false,
+                                  "attributes": {
+                                    "category": "DevOps",
+                                    "priority": "2",
+                                    "comments": "This is a sample pipeline script to be added in your change step",
+                                    "work_notes": "adding Auto closeCose True"
+                                }
               }
-            # You can specify the requested_by attribute either with name or sys_id. Example: "requested_by":{"name": "Test User"} or "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
-            # You can specify the assignment_group attribute either with name or sys_id. Example: "assignment_group":{"name": "Change Approval Team"} or "assignment_group": "5f721d93c0a8010e015533746de18bf9"
-            # start_date: This is the planned start date
-            # end_date: This is the planned end date  
- 
-
-        # - task: ServiceNow-DevOps-Server-Change-Acceleration@1
-        #   inputs:
-        #     connectedServiceName: 'dsinghu1-Basic Project1-ServiceNow DevOps Service Connection'
-        #     changeRequestDetails: |
-        #       {
-        #         "autoCloseChange": false,
-        #         "attributes": {
-        #           "requested_by": {
-        #             "name": "DevOps System"
-        #           }
-        #         }                
-        #       }
