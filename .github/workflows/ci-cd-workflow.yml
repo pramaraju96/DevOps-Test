@@ -164,6 +164,7 @@ jobs:
     name: 'Change'
     needs: build
     runs-on: ubuntu-latest
+    environment: PROD
     steps:     
     - name: ServiceNow DevOps Change Automation
     # You may pin to the exact commit or the version.            
