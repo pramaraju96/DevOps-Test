@@ -164,7 +164,7 @@ jobs:
     name: 'Change'
     needs: build
     runs-on: ubuntu-latest
-    environment: PROD
+   
     steps:     
     - name: ServiceNow DevOps Change Automation
     # You may pin to the exact commit or the version.            
@@ -203,6 +203,7 @@ jobs:
     name: 'Deploy'
     needs: change
     runs-on: ubuntu-latest
+    environment: PROD
     steps:
     - name: Run deployment scripts
       run: echo 'Deployment step in progress...'
