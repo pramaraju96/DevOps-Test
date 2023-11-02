@@ -1,6 +1,6 @@
 def changeRequestNumber = "null"
 def stageName = "STAGE"
-def ciPipelineName = "CI_Pipeline"
+def ciPipelineName = "Rama scripted folder/fScriptedPipeline2"
 def currStageName = "none"
 pipeline {
     agent any
