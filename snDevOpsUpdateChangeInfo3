@@ -54,8 +54,8 @@ pipeline {
                 script{
                     echo "snDevOpsGetChangeNumber Step, changeId - ${changeRequestId}"
                     //changeRequestId = snDevOpsUpdateChangeInfo()
-                    //changeRequestId = snDevOpsGetChangeNumber pipelineDetails: '{"attributes":{"pipeline_name":"Surya_AdvCR","build_number":"35","step_name":"Change"}}'
-                    changeRequestId = snDevOpsGetChangeNumber changeDetails: '{"pipeline_name":"Surya-AdvCR","build_number":"7","stage_name":"Change"}'
+                    //changeRequestId = snDevOpsGetChangeNumber pipelineDetails: '{"attributes":{"pipeline_name":"Rama scripted folder/fScriptedPipeline2Surya_AdvCR","build_number":"${BUILD_NUMBER}","step_name":"Change"}}'
+                    changeRequestId = snDevOpsGetChangeNumber changeDetails: '{"pipeline_name":"Rama scripted folder/fScriptedPipeline2","build_number":"${BUILD_NUMBER}","stage_name":"Change"}'
                     echo "snDevOpsGetChangeNumber Done, changeId - ${changeRequestId}"
                     changeRequestId = snDevOpsUpdateChangeInfo()
                     echo "snDevOpsGetChangeNumber Done, changeId - ${changeRequestId}"
