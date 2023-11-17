@@ -78,14 +78,15 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     name: 'Get Change'
+    needs: [change]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Print the github context variables
       run: |
         echo "build_number = ${{ github.run_number }}"
-        echo "pipeline_name = ${{ github.action }}"
-        echo "stage_name = ${{ github.job }}"
+        echo "pipeline_name = ${{ github.workflow }}"
+        echo "stage_name = ${{ github.job.name }}"
     - name: ServiceNow DevOps Get Change
       id: get
     # You may pin to the exact commit or the version.
@@ -110,6 +111,8 @@ jobs:
   updatechange:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    name: 'Update Change'
+    needs: [change, getchange]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
