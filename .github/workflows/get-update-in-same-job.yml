@@ -1,6 +1,13 @@
 name: GET-UPDATE in same job
+
 on: 
   workflow_dispatch:
+
+env:
+  GITHUB_CONTEXT: ${{ toJSON(github) }}
+  buildNumber: "${GITHUB_CONTEXT.run_id}/attempts/${GITHUB_CONTEXT.run_attempt}"
+  pipelineName: "${GITHUB_CONTEXT.repository}/${GITHUB_CONTEXT.workflow}"
+  stageName: "${GITHUB_CONTEXT.job}"
 
 jobs:
   ServiceNowDevOpsChange:
@@ -45,6 +52,11 @@ jobs:
       changeRequestNumber: ${{ steps.create_change.outputs.change-request-number }}
     name: 'ServiceNow DevOps Get and Update Change'
     steps:
+      - name: Print environment variables
+        run:  |
+          echo "buildNumber = $buildNumber"
+          echo "pipelineName = $pipelineName"
+          echo "stageName = $stageName"
       - name: ServiceNow DevOps Get Change
         # You may pin to the exact commit or the version.
         # uses: ServiceNow/servicenow-devops-get-change@0f8b1914adeaec764a4286bdd9cba73ed1c6097f
