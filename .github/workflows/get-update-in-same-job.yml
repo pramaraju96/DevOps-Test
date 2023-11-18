@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  buildNumber: "${{github.run_id}}/attempts/${{github.run_attempt}}"
+  buildNumber: "${{github.run_id}}"
   pipelineName: "${{github.repository}}/${{github.workflow}}"
 
 jobs:
@@ -52,7 +52,6 @@ jobs:
     steps:
       - name: Print environment variables
         run:  |
-          echo "github.run_id = ${{github.run_id}}"
           echo "buildNumber = ${{ env.buildNumber }}"
           echo "pipelineName = ${{ env.pipelineName }}"
           echo "stageName = ${{ github.job }}"
@@ -72,6 +71,8 @@ jobs:
           context-github: ${{ toJSON(github) }}
           # The inputs to identify change at Servicenow and GET it.
           change-details: '{"build_number": "${{ env.buildNumber }}", "pipeline_name": "${{ env.pipelineName }}", "stage_name": "${{ github.job.name }}"}'
+          #change-details: '{"build_number": "", "pipeline_name": "", "stage_name": ""}'
+          #change-details: '{"build_number": null, "pipeline_name": null, "stage_name": null}'
 
       - name: Output of ServiceNow DevOps Get change
         run: echo 'Output of ServiceNow DevOps Get Change is change-request-number = ${{ steps.get_change.outputs.change-request-number }}' >> $GITHUB_OUTPUT
