@@ -9,16 +9,17 @@ env:
   stageName: "${{github.job}}"
 
 jobs:
-  # ServiceNowDevOpsChange:
-  #   # jobs that must complete successfully before this job will run
-  #   #needs: build
-  #   # type of machine to run the job on
-  #   runs-on: ubuntu-latest
-  #   name: 'ServiceNow DevOps Change'
+  ServiceNowDevOpsChange:
+    # jobs that must complete successfully before this job will run
+    #needs: build
+    # type of machine to run the job on
+    runs-on: ubuntu-latest
+    name: 'ServiceNow DevOps Change'
 
-  #   steps:
-  #     - name: ServiceNow DevOps Change Automation
-  #       id: create_change
+    steps:
+      - name: ServiceNow DevOps Change Automation
+        id: create_change
+        run: echo 'in ServiceNowDevOpsChange'
   #       uses: ServiceNow/servicenow-devops-change@dev
   #       with:
   #         # Devops Integration Token
@@ -41,7 +42,7 @@ jobs:
 
   ServiceNowDevOpsGetAndUpdateChange:
     # jobs that must complete successfully before this job will run
-    #needs: ServiceNowDevOpsChange
+    needs: ServiceNowDevOpsChange
     # type of machine to run the job on
     runs-on: ubuntu-latest
     outputs:
