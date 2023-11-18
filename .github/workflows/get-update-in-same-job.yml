@@ -52,8 +52,9 @@ jobs:
     steps:
       - name: Print environment variables
         run:  |
-          echo "buildNumber = $env.buildNumber"
-          echo "pipelineName = $env.pipelineName"
+          echo "github.run_id = ${{github.run_id}}"
+          echo "buildNumber = ${{ env.buildNumber }}"
+          echo "pipelineName = ${{ env.pipelineName }}"
           echo "stageName = ${{ github.job }}"
       - name: ServiceNow DevOps Get Change
         # You may pin to the exact commit or the version.
