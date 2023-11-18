@@ -4,10 +4,9 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_CONTEXT: ${{ toJSON(github) }}
-  buildNumber: "${GITHUB_CONTEXT.run_id}/attempts/${GITHUB_CONTEXT.run_attempt}"
-  pipelineName: "${GITHUB_CONTEXT.repository}/${GITHUB_CONTEXT.workflow}"
-  stageName: "${GITHUB_CONTEXT.job}"
+  buildNumber: "${{github.run_id}}/attempts/${{github.run_attempt}}"
+  pipelineName: "${{github.repository}}/${{github.workflow}}"
+  stageName: "${{github.job}}"
 
 jobs:
   ServiceNowDevOpsChange:
