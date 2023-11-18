@@ -55,7 +55,7 @@ jobs:
         run:  |
           echo "buildNumber = $buildNumber"
           echo "pipelineName = $pipelineName"
-          echo "stageName = ${{ jobs.ServiceNowDevOpsChange.steps.create_change.name }}"
+          echo "stageName = ${{ steps.create_change.name }}"
       - name: ServiceNow DevOps Get Change
         # You may pin to the exact commit or the version.
         # uses: ServiceNow/servicenow-devops-get-change@0f8b1914adeaec764a4286bdd9cba73ed1c6097f
@@ -71,7 +71,7 @@ jobs:
           # Github Context
           context-github: ${{ toJSON(github) }}
           # The inputs to identify change at Servicenow and GET it.
-          change-details: '{"build_number": "${{ github.run_number }}", "pipeline_name": "${{ github.workflow }}", "stage_name": "${{ jobs.ServiceNowDevOpsChange.steps.create_change.name }}"}'
+          change-details: '{"build_number": "${{ github.run_number }}", "pipeline_name": "${{ github.workflow }}", "stage_name": "${{ steps.create_change.name }}"}'
 
       - name: Output of ServiceNow DevOps Get change
         run: echo 'Output of ServiceNow DevOps Get Change is change-request-number = ${{ steps.get_change.outputs.change-request-number }}' >> $GITHUB_OUTPUT
