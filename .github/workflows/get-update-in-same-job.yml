@@ -36,7 +36,9 @@ jobs:
           # start_date: This is the planned start date
           # end_date: This is the planned end date
       - name: Output of ServiceNow DevOps Change Automation
-        run: echo 'Output of ServiceNow DevOps Change Automation is change-request-number = ${{ steps.create_change.outputs.change-request-number }}' >> $GITHUB_OUTPUT
+        run: |
+          echo 'Output of ServiceNow DevOps Change Automation is change-request-number = ${{ steps.create_change.outputs.change-request-number }}' >> $GITHUB_OUTPUT
+          echo 'Output of ServiceNow DevOps Change Automation is change-request-sys-id = ${{ steps.create_change.outputs.change-request-sys-id }}' >> $GITHUB_OUTPUT
 
   ServiceNowDevOpsGetAndUpdateChange:
     # jobs that must complete successfully before this job will run
