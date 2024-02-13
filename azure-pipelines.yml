@@ -5,7 +5,7 @@
 
 # Stage 'ServiceNow DevOps Agent Artifact Registration' has an invalid name. 
 # Valid names may only contain alphanumeric characters and '_' and may not start with a number.
-trigger: none
+#trigger: none
 
 # schedules:
 # - cron: '*/2 * * * *'
@@ -14,6 +14,17 @@ trigger: none
 #     include:
 #     - main
 
+pr:
+  branches:
+    include:
+    - main
+    - master
+    - features/*
+    exclude:
+    - features/experimental/*
+  paths:
+    exclude:
+    - README.md
 
 pool:
   vmImage: ubuntu-latest
