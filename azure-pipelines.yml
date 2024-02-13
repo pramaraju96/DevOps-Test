@@ -1,0 +1,79 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# Stage 'ServiceNow DevOps Agent Artifact Registration' has an invalid name. 
+# Valid names may only contain alphanumeric characters and '_' and may not start with a number.
+trigger: none
+
+# schedules:
+# - cron: '*/2 * * * *'
+#   displayName: At every 2nd minute.
+#   branches:
+#     include:
+#     - main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Job_Build
+        steps:
+          - task: Bash@3
+            inputs:
+              targetType: inline
+              script: |
+                # Write your commands here                  
+                echo 'Hello world.'
+  
+  - stage: Test
+    dependsOn:
+      - Build
+    jobs:
+      - job: Job_Test
+        steps:
+          - task: Maven@3
+            inputs:
+              mavenPomFile: 'pom.xml'
+              goals: 'test'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+              testRunTitle: 'Job_Test'
+              codeCoverageToolOption: 'JaCoCo'
+              javaHomeOption: 'JDKVersion'
+              mavenVersionOption: 'Default'
+              mavenAuthenticateFeed: false
+              effectivePomSkip: false
+              sonarQubeRunAnalysis: true
+              isJacocoCoverageReportXML: true
+              sqMavenPluginVersionChoice: 'latest'
+
+  - stage: Deploy
+    dependsOn: [Test]
+    jobs:
+      - job: Job_Deploy
+        timeoutInMinutes: 30
+        pool:
+          name: server
+        steps:
+          - task: ServiceNow-DevOps-Server-Change-Acceleration@1
+            inputs:
+              connectedServiceName: 'devopsvancouver47-Basic Project1-ServiceNow DevOps Service Connection'
+              UpstreamJob: 'Job_Deploy'
+              changeRequestDetails: |
+                {
+                  "autoCloseChange": true,
+                  "attributes": {
+                    "requested_by": {"name": "DevOps System"},
+                    "category": "DevOps",
+                    "priority": "2",
+                    "chg_model": {"name": "normal"},
+                    "assignment_group": {"name": "Change Management"}
+                    }
+                }
+    condition: succeededOrFailed()
+
+                
