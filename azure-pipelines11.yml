@@ -82,7 +82,7 @@ stages:
         steps:
           - task: ServiceNow-DevOps-Server-Change-Acceleration@1
             inputs:
-              connectedServiceName: 'devopsvancouver47-Basic Project1-ServiceNow DevOps Service Connection'
+              connectedServiceName: 'devopswashingtondc12-Basic Project1-ServiceNow DevOps Service Connection'
               UpstreamJob: 'Job_Deploy'
               changeRequestDetails: |
                 {
